@@ -5,7 +5,7 @@ import axios from 'axios';
 
 class App extends Component {
   state = {
-    data: [],
+    quizzes: [],
     id: 0,
     message: null,
     intervalIsSet: false,
@@ -29,26 +29,28 @@ class App extends Component {
     }
   }
 
+  // this will download all of the quizzes from the database and add them to this.state.quizzes array
+
   getDataFromDb = () => {
-    fetch('http://localhost:3001/api/getData')
-      .then((data) => data.json())
-      .then((res) => this.setState({ data: res.data }));
+    fetch('http://localhost:3001/quiz/getQuiz')
+      .then((quiz) => quiz.json())
+      .then((res) => this.setState({ quizzes: res.quiz }));
   };
 
-  putDataToDB = (message) => {
-    
-    let currentIds = this.state.data.map((data) => data.id);
+  createQuiz = (message) => {
+    console.log(message);
+    let currentIds = this.state.quizzes.map((quiz) => quiz.id);
     let idToBeAdded = 0;
-    
+    console.log("currentIds",currentIds);
     while (currentIds.includes(idToBeAdded)) {
       ++idToBeAdded;
-      console.log("Are we While");
     }
 
-    axios.post('http://localhost:3001/api/putData', {
+    axios.post('http://localhost:3001/quiz/newQuiz', {
       id: idToBeAdded,
-      message: message,
+      name: message,
     });
+    
   };
 
   // our delete method that uses our backend api
@@ -56,17 +58,18 @@ class App extends Component {
   deleteFromDB = (idTodelete) => {
     parseInt(idTodelete);
     let objIdToDelete = null;
-    this.state.data.forEach((dat) => {
-      if (dat.id == idTodelete) {
-        objIdToDelete = dat._id;
+    this.state.quizzes.forEach((quiz) => {
+      if (quiz.id == idTodelete) {
+        objIdToDelete = quiz._id;
+        console.log(quiz._id);
       }
     });
 
-    axios.delete('http://localhost:3001/api/deleteData', {
+    axios.delete('http://localhost:3001/quiz/deleteQuiz', {
       data: {
         id: objIdToDelete,
       },
-    });
+      });
   };
 
   // our update method that uses our backend api
@@ -74,15 +77,15 @@ class App extends Component {
   updateDB = (idToUpdate, updateToApply) => {
     let objIdToUpdate = null;
     parseInt(idToUpdate);
-    this.state.data.forEach((dat) => {
+    this.state.quizzes.forEach((dat) => {
       if (dat.id == idToUpdate) {
         objIdToUpdate = dat._id;
       }
     });
 
-    axios.post('http://localhost:3001/api/updateData', {
+    axios.post('http://localhost:3001/quiz/updateQuiz', {
       id: objIdToUpdate,
-      update: { message: updateToApply },
+      update: { name: updateToApply },
     });
   };
 
@@ -90,17 +93,18 @@ class App extends Component {
   // it is easy to understand their functions when you
   // see them render into our screen
   render() {
-    const { data } = this.state;
+    const { quizzes } = this.state;
     return (
       <div>
+        <h1>Welcome to the Quiz Factory!</h1>
         <ul>
-          {data.length <= 0
-            ? 'NO DB ENTRIES YET'
-            : data.map((data) => (
-                <li style={{ padding: '10px' }} key={data.message}>
-                  <span style={{ color: 'gray' }}> id: </span> {data.id} <br />
+          {quizzes.length <= 0
+            ? 'No quizzes exist right now. Why don\'t you make one? \:\)'
+            : quizzes.map((quiz) => (
+                <li style={{ padding: '10px' }} key={quiz.id}>
+                  <span style={{ color: 'gray' }}> id: </span> {quiz.id} <br />
                   <span style={{ color: 'gray' }}> data: </span>
-                  {data.message}
+                  {quiz.name}
                 </li>
               ))}
         </ul>
@@ -111,7 +115,7 @@ class App extends Component {
             placeholder="add something in the database"
             style={{ width: '200px' }}
           />
-          <button onClick={() => {this.putDataToDB(this.state.message)}}>
+          <button onClick={() => {this.createQuiz(this.state.message)}}>
             ADD
           </button>
         </div>

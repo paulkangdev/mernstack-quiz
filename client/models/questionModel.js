@@ -2,8 +2,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var QuestionSchema = new Schema({
-    name: String
+    questionText: String,
+    // answerList: [Answer]
 });
 
-var QuestionModel = mongoose.model('QuestionModel', QuestionSchema);
-module.exports = QuestionModel;
+var questionModel = mongoose.model('QuestionModel', QuestionSchema);
+module.exports = questionModel;
