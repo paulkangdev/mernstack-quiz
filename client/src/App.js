@@ -12,6 +12,7 @@ class App extends Component {
     idToDelete: null,
     idToUpdate: null,
     objectToUpdate: null,
+    quizCreatorDisplay: false,
   };
 
   componentDidMount() {
@@ -97,7 +98,7 @@ class App extends Component {
         {quiz.name}
       </li>);
     });
-      
+          
     return (
       <div>
         <h1>Welcome to the Quiz Factory!</h1>
@@ -107,6 +108,11 @@ class App extends Component {
             : displayQuizzes
           }
         </ul>
+        <button onClick={()=>{this.setState({quizCreatorDisplay: 'true'})}}>
+          Create a Quiz
+        </button>
+
+        <div>{this.state.quizCreatorDisplay ? <QuizCreator /> : ''}</div>
         
         
       </div>
