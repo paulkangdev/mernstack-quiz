@@ -24,8 +24,6 @@ var quizRouter = require('./routes/quizRouter');
 var questionRouter = require('./routes/questionRouter');
 var answerRouter = require('./routes/answerRouter');
 
-
-
 app.use('/answer', answerRouter);
 app.use('/quiz', quizRouter);
 app.use('/question', questionRouter);

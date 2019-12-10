@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-
+import QuizCreator from './components/QuizCreator';
 
 
 class App extends Component {
@@ -53,7 +53,6 @@ class App extends Component {
     
   };
 
-  // our delete method that uses our backend api
   // to remove existing database information
   deleteFromDB = (idTodelete) => {
     parseInt(idTodelete);
@@ -89,69 +88,30 @@ class App extends Component {
     });
   };
 
-  // here is our UI
-  // it is easy to understand their functions when you
-  // see them render into our screen
   render() {
     const { quizzes } = this.state;
+    const displayQuizzes = quizzes.map((quiz) => {
+      return (<li style={{ padding: '10px' }} key={quiz.id}>
+        <span style={{ color: 'gray' }}> id: </span> {quiz.id} <br />
+        <span style={{ color: 'gray' }}> data: </span>
+        {quiz.name}
+      </li>);
+    });
+      
     return (
       <div>
         <h1>Welcome to the Quiz Factory!</h1>
         <ul>
           {quizzes.length <= 0
             ? 'No quizzes exist right now. Why don\'t you make one? \:\)'
-            : quizzes.map((quiz) => (
-                <li style={{ padding: '10px' }} key={quiz.id}>
-                  <span style={{ color: 'gray' }}> id: </span> {quiz.id} <br />
-                  <span style={{ color: 'gray' }}> data: </span>
-                  {quiz.name}
-                </li>
-              ))}
+            : displayQuizzes
+          }
         </ul>
-        <div style={{ padding: '10px' }}>
-          <input
-            type="text"
-            onChange={(e) => this.setState({ message: e.target.value })}
-            placeholder="add something in the database"
-            style={{ width: '200px' }}
-          />
-          <button onClick={() => {this.createQuiz(this.state.message)}}>
-            ADD
-          </button>
-        </div>
-        <div style={{ padding: '10px' }}>
-          <input
-            type="text"
-            style={{ width: '200px' }}
-            onChange={(e) => this.setState({ idToDelete: e.target.value })}
-            placeholder="put id of item to delete here"
-          />
-          <button onClick={() => this.deleteFromDB(this.state.idToDelete)}>
-            DELETE
-          </button>
-        </div>
-        <div style={{ padding: '10px' }}>
-          <input
-            type="text"
-            style={{ width: '200px' }}
-            onChange={(e) => this.setState({ idToUpdate: e.target.value })}
-            placeholder="id of item to update here"
-          />
-          <input
-            type="text"
-            style={{ width: '200px' }}
-            onChange={(e) => this.setState({ updateToApply: e.target.value })}
-            placeholder="put new value of the item here"
-          />
-          <button
-            onClick={() =>
-              this.updateDB(this.state.idToUpdate, this.state.updateToApply)
-            }
-          >
-            UPDATE
-          </button>
-        </div>
+        
+        
       </div>
+
+      
     );
   }
 }
