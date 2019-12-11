@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var QuizSchema = new Schema({
     id: Number,
     name: String,
-    // questionList: [Question]
+    questionList: [{type: Schema.Types.ObjectId, ref: 'QuestionModel' }]
 });
 
 var quizModel = mongoose.model('QuizModel', QuizSchema);

@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import QuizCreator from './components/QuizCreator';
 
-
 class App extends Component {
   state = {
+    currentQuiz: 0,
     quizzes: [],
     id: 0,
     message: null,
@@ -28,10 +28,9 @@ class App extends Component {
       clearInterval(this.state.intervalIsSet);
       this.setState({ intervalIsSet: null });
     }
-  }
+  };
 
   // this will download all of the quizzes from the database and add them to this.state.quizzes array
-
   getDataFromDb = () => {
     fetch('http://localhost:3001/quiz/getQuiz')
       .then((quiz) => quiz.json())
@@ -39,14 +38,14 @@ class App extends Component {
   };
 
   createQuiz = (message) => {
-    console.log(message);
+    
     let currentIds = this.state.quizzes.map((quiz) => quiz.id);
     let idToBeAdded = 0;
-    console.log("currentIds",currentIds);
+    
     while (currentIds.includes(idToBeAdded)) {
       ++idToBeAdded;
     }
-
+    
     axios.post('http://localhost:3001/quiz/newQuiz', {
       id: idToBeAdded,
       name: message,
@@ -61,8 +60,7 @@ class App extends Component {
     this.state.quizzes.forEach((quiz) => {
       if (quiz.id == idTodelete) {
         objIdToDelete = quiz._id;
-        console.log(quiz._id);
-      }
+              }
     });
 
     axios.delete('http://localhost:3001/quiz/deleteQuiz', {
@@ -89,8 +87,12 @@ class App extends Component {
     });
   };
 
+  
+  
+
   render() {
     const { quizzes } = this.state;
+    
     const displayQuizzes = quizzes.map((quiz) => {
       return (<li style={{ padding: '10px' }} key={quiz.id}>
         <span style={{ color: 'gray' }}> id: </span> {quiz.id} <br />
@@ -108,11 +110,27 @@ class App extends Component {
             : displayQuizzes
           }
         </ul>
-        <button onClick={()=>{this.setState({quizCreatorDisplay: 'true'})}}>
+        <button onClick={()=>{
+          this.setState({quizCreatorDisplay: 'true'});
+          
+          }}>
           Create a Quiz
         </button>
 
-        <div>{this.state.quizCreatorDisplay ? <QuizCreator /> : ''}</div>
+        <input
+            type="text"
+            style={{ width: '200px' }}
+            onChange={(e) => this.setState({ idToDelete: e.target.value })}
+            placeholder="put id of item to delete here"
+          />
+          <button onClick={() => this.deleteFromDB(this.state.idToDelete)}>
+            DELETE
+          </button>
+        <div>{
+          this.state.quizCreatorDisplay 
+          ? <QuizCreator quizList={this.state.quizzes}/> 
+          : ''}
+        </div>
         
         
       </div>

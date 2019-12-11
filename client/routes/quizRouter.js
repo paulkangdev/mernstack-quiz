@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const Quiz = require('../models/quizModel');
+const Quiz = require('../src/models/quizModel');
+const Question = require('../src/models/questionModel')
 
 router.get('/getQuiz', (req, res) => {
     Quiz.find((err, quiz) => {
@@ -29,22 +30,43 @@ router.get('/getQuiz', (req, res) => {
   router.post('/newQuiz', (req, res) => {
     let quiz = new Quiz();
     
-    const { id, name } = req.body;
-    
-    if ((!id && id !== 0) || !name) {
-      return res.json({
-        success: false,
-        error: 'INVALID INPUTS',
-      });
-    }
-    quiz.name = name;
+    const { quizName, id } = req.body;
+   
+    quiz.name = quizName;
     quiz.id = id;
-    console.log(quiz.name, quiz.id);
+    
+    console.log(quiz);    
     quiz.save((err) => {
       if (err) return res.json({ success: false, error: err });
-        console.log("We savin'");
-      return res.json({ success: true });
+        console.log("We savin' QUIZ");
+     
     });
+
+    var question = new Question();
+
+    const { 
+      questionText, 
+      answerOne,
+      answerTwo,
+      answerThree,
+      answerFour,
+      correctAnswer,
+    } = req.body;
+      
+    question.questionText = questionText;
+    question.answerOne = answerOne;
+    question.answerTwo = answerTwo;
+    question.answerThree = answerThree;
+    question.answerFour = answerFour;
+    question.correctAnswer =  correctAnswer;
+    question.containingQuiz = quiz._id;
+
+    question.save((err) => {
+      if (err) return res.json({ success: false, error: err });
+        console.log("We savin' QUESTION");
+    
+    });
+
   });
 
 

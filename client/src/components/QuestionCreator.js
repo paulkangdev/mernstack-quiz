@@ -4,9 +4,7 @@ class QuestionCreator extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-           
         };
-
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
@@ -14,24 +12,16 @@ class QuestionCreator extends React.Component {
         const target = event.target;
         const value = target.value;
         const name = target.name;
-    
         this.setState({
           [name]: value
         })
         
     }
 
-    handleSubmit(event) {
-        event.preventDefault();
-
-    }
-
     render() {
      return(
          <div style={{display: 'block'}}> 
              <h2>Question Creator</h2>
-             <form onSubmit={this.handleSubmit}>
-            <label>
              <input 
                 type="text" 
                 onChange={this.handleInputChange} 
@@ -86,9 +76,7 @@ class QuestionCreator extends React.Component {
                 
             </div>
 
-            <input type="submit" value="Submit" />
-            </label>
-             </form>
+            
          </div>
      );
     }
