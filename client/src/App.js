@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import QuizCreator from './components/QuizCreator';
+import Toggle from './components/Toggle';
 
 class App extends Component {
   state = {
@@ -110,12 +111,12 @@ class App extends Component {
             : displayQuizzes
           }
         </ul>
-        <button onClick={()=>{
+        {/* <button onClick={()=>{
           this.setState({quizCreatorDisplay: 'true'});
           
           }}>
           Create a Quiz
-        </button>
+        </button> */}
 
         <input
             type="text"
@@ -126,16 +127,21 @@ class App extends Component {
           <button onClick={() => this.deleteFromDB(this.state.idToDelete)}>
             DELETE
           </button>
-        <div>{
-          this.state.quizCreatorDisplay 
-          ? <QuizCreator quizList={this.state.quizzes}/> 
-          : ''}
-        </div>
-        
-        
-      </div>
-
-      
+        <Toggle 
+          render={({ on, toggle }) => (
+            <div>
+              {on && <QuizCreator quizList={this.state.quizzes}> </QuizCreator>}
+              <button onClick={toggle}>
+                {on 
+                  ? <h1>Hide Quiz Creator</h1>
+                  : <h1>Show Quiz Creator</h1>}
+              </button>
+            </div>
+          )}
+        />
+          
+      </div>    
+              
     );
   }
 }

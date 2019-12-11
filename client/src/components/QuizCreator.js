@@ -38,7 +38,6 @@ class QuizCreator extends React.Component {
         const data = {
             id: idToBeAdded,
             quizName: this.state.quizName,
-           
             questionText: this.state.questionText,
             answerOne: this.state.answerOne,
             answerTwo: this.state.answerTwo,
@@ -119,7 +118,7 @@ class QuizCreator extends React.Component {
                     <input type="radio" name="correctAnswer" value="answerFour" onChange={this.handleInputChange}></input> 
             </div>
                 
-                <button value="Submit Question" type="submit" onClick={this.handleSubmit}></button>
+                <button value="Submit Question" type="submit" onClick={this.handleSubmit}>Create Quiz and First Question</button>
             </form>                
             </div>           
         );
