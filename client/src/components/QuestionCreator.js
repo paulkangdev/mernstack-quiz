@@ -1,5 +1,7 @@
-import React from 'react';
+import React, {Component} from 'react';
 import AnswerCreator from './AnswerCreator';
+import axios from 'axios';
+
 class QuestionCreator extends React.Component {
     constructor(props) {
         super(props);
@@ -18,66 +20,84 @@ class QuestionCreator extends React.Component {
         
     }
 
+    handleSubmit(event, quizID) {
+        event.preventDefault();
+        
+        const data = {
+            quizName: this.state.quizName,
+            questionText: this.state.questionText,
+            answerOne: this.state.answerOne,
+            answerTwo: this.state.answerTwo,
+            answerThree: this.state.answerThree,
+            answerFour: this.state.answerFour,
+            correctAnswer: this.state.correctAnswer,
+            containingQuiz: this.state.currentQuiz,
+        };
+        
+        axios.post('http://localhost:3001/question/newQuestion', data);
+    
+    }
+
     render() {
      return(
-         <div style={{display: 'block'}}> 
-             <h2>Question Creator</h2>
-             <input 
+         <>
+        <h2>Question Creator</h2>
+        <input 
+            type="text" 
+            onChange={this.handleInputChange} 
+            name="questionText" 
+            placeholder="Enter your QUESTION here!" 
+            style={{ width: '200px' }}
+        />
+        
+        <div className="answer">
+            <input name="answerOne"
                 type="text" 
                 onChange={this.handleInputChange} 
-                name="QuestionText" 
-                placeholder="Enter your QUESTION here!" 
+                placeholder="Enter your ANSWER here!" 
+                style={{ width: '200px' }}
+            />
+         
+                Is this the CORRECT answer? <input type="radio" name="correctAnswer" value="answerOne" onChange={this.handleInputChange}></input> 
+           
+        </div>
+        <div className="answer">
+            <input name="answerTwo"
+                type="text" 
+                onChange={this.handleInputChange} 
+                placeholder="Enter your ANSWER here!" 
                 style={{ width: '200px' }}
             />
             
-            <div className="answer">
-                <input name="answer-one"
-                    type="text" 
-                    onChange={this.handleInputChange} 
-                    placeholder="Enter your ANSWER here!" 
-                    style={{ width: '200px' }}
-                />
-             
-                    Is this the CORRECT answer? <input type="radio" name="correct-answer" value="answer-one" onChange={this.handleInputChange}></input> 
-               
-            </div>
-            <div className="answer">
-                <input name="answer-two"
-                    type="text" 
-                    onChange={this.handleInputChange} 
-                    placeholder="Enter your ANSWER here!" 
-                    style={{ width: '200px' }}
-                />
-                
-                    Is this the CORRECT answer? <input type="radio" name="correct-answer" value="answer-two" onChange={this.handleInputChange}></input> 
-               
-            </div>
-            <div className="answer">
-                <input name="answer-three"
-                    type="text" 
-                    onChange={this.handleInputChange} 
-                    placeholder="Enter your ANSWER here!" 
-                    style={{ width: '200px' }}
-                />
+                Is this the CORRECT answer? <input type="radio" name="correctAnswer" value="answerTwo" onChange={this.handleInputChange}></input> 
+           
+        </div>
+        <div className="answer">
+            <input name="answerThree"
+                type="text" 
+                onChange={this.handleInputChange} 
+                placeholder="Enter your ANSWER here!" 
+                style={{ width: '200px' }}
+            />
+        
+                Is this the CORRECT answer? <input type="radio" name="correctAnswer" value="answerThree" onChange={this.handleInputChange}></input> 
+          
+        </div>
+        <div className="answer">
+            <input name="answerFour"
+                type="text" 
+                onChange={this.handleInputChange} 
+                placeholder="Enter your ANSWER here!" 
+                style={{ width: '200px' }}
+            />
             
-                    Is this the CORRECT answer? <input type="radio" name="correct-answer" value="answer-three" onChange={this.handleInputChange}></input> 
-              
-            </div>
-            <div className="answer">
-                <input name="answer-four"
-                    type="text" 
-                    onChange={this.handleInputChange} 
-                    placeholder="Enter your ANSWER here!" 
-                    style={{ width: '200px' }}
-                />
-                
-                    Is this the CORRECT answer? 
-                    <input type="radio" name="correct-answer" value="answer-four" onChange={this.handleInputChange}></input> 
-                
-            </div>
-
+            Is this the CORRECT answer? 
+                <input type="radio" name="correctAnswer" value="answerFour" onChange={this.handleInputChange}></input> 
+        </div>
             
-         </div>
+            <button type="submit" onClick={this.handleSubmit}>Submit First Question</button>
+       {this.props.display}
+    </>
      );
     }
 }

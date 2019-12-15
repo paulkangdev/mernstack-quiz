@@ -28,44 +28,45 @@ router.get('/getQuiz', (req, res) => {
   });
   
   router.post('/newQuiz', (req, res) => {
-    let quiz = new Quiz();
+    var quiz = new Quiz();
     
     const { quizName, id } = req.body;
    
     quiz.name = quizName;
     quiz.id = id;
     
-    console.log(quiz);    
-    quiz.save((err) => {
+    quiz.save((err,quiz) => {
       if (err) return res.json({ success: false, error: err });
-        console.log("We savin' QUIZ");
-     
+     else {
+       console.log(quiz);
+       return res.json({success: true, quiz: quiz});
+      }
     });
-
-    var question = new Question();
-
-    const { 
-      questionText, 
-      answerOne,
-      answerTwo,
-      answerThree,
-      answerFour,
-      correctAnswer,
-    } = req.body;
-      
-    question.questionText = questionText;
-    question.answerOne = answerOne;
-    question.answerTwo = answerTwo;
-    question.answerThree = answerThree;
-    question.answerFour = answerFour;
-    question.correctAnswer =  correctAnswer;
-    question.containingQuiz = quiz._id;
-
-    question.save((err) => {
-      if (err) return res.json({ success: false, error: err });
-        console.log("We savin' QUESTION");
     
-    });
+    // var question = new Question();
+
+    // const { 
+    //   questionText, 
+    //   answerOne,
+    //   answerTwo,
+    //   answerThree,
+    //   answerFour,
+    //   correctAnswer,
+    // } = req.body;
+      
+    // question.questionText = questionText;
+    // question.answerOne = answerOne;
+    // question.answerTwo = answerTwo;
+    // question.answerThree = answerThree;
+    // question.answerFour = answerFour;
+    // question.correctAnswer =  correctAnswer;
+    // question.containingQuiz = quiz._id;
+
+    // question.save((err) => {
+    //   if (err) return res.json({ success: false, error: err });
+    //     console.log("We savin' QUESTION");
+    
+    // });
 
   });
 

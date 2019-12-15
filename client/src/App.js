@@ -48,7 +48,7 @@ class App extends Component {
     }
     
     axios.post('http://localhost:3001/quiz/newQuiz', {
-      id: idToBeAdded,
+      
       name: message,
     });
     
@@ -83,7 +83,7 @@ class App extends Component {
     });
 
     axios.post('http://localhost:3001/quiz/updateQuiz', {
-      id: objIdToUpdate,
+      
       update: { name: updateToApply },
     });
   };
@@ -95,8 +95,8 @@ class App extends Component {
     const { quizzes } = this.state;
     
     const displayQuizzes = quizzes.map((quiz) => {
-      return (<li style={{ padding: '10px' }} key={quiz.id}>
-        <span style={{ color: 'gray' }}> id: </span> {quiz.id} <br />
+      return (<li style={{ padding: '10px' }} key={quiz._id}>
+        <span style={{ color: 'gray' }}> id: </span> {quiz._id} <br />
         <span style={{ color: 'gray' }}> data: </span>
         {quiz.name}
       </li>);
@@ -111,12 +111,6 @@ class App extends Component {
             : displayQuizzes
           }
         </ul>
-        {/* <button onClick={()=>{
-          this.setState({quizCreatorDisplay: 'true'});
-          
-          }}>
-          Create a Quiz
-        </button> */}
 
         <input
             type="text"
@@ -127,19 +121,9 @@ class App extends Component {
           <button onClick={() => this.deleteFromDB(this.state.idToDelete)}>
             DELETE
           </button>
-        <Toggle 
-          render={({ on, toggle }) => (
-            <div>
-              {on && <QuizCreator quizList={this.state.quizzes}> </QuizCreator>}
-              <button onClick={toggle}>
-                {on 
-                  ? <h1>Hide Quiz Creator</h1>
-                  : <h1>Show Quiz Creator</h1>}
-              </button>
-            </div>
-          )}
-        />
+          <QuizCreator 
           
+          />
       </div>    
               
     );

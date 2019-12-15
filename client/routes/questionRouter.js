@@ -31,5 +31,14 @@ router.post('/newQuestion', (req, res) => {
     });
   });
 
+router.get('/getQuestions', (req, res) => {
+  
+  Question.find({truthiness: {$eq:'seventeen'}}, (err, matches) =>{
+    if(err) return res.json({success:false,error:err});
+    return res.json({success:true, matches: matches});
+    
+  });
+});
+
 
 module.exports = router;
