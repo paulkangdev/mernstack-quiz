@@ -18,17 +18,11 @@ class App extends Component {
 
   componentDidMount() {
     this.getDataFromDb();
-    if (!this.state.intervalIsSet) {
-      let interval = setInterval(this.getDataFromDb, 1000);
-      this.setState({ intervalIsSet: interval });
-    }
+    
   }
 
   componentWillUnmount() {
-    if (this.state.intervalIsSet) {
-      clearInterval(this.state.intervalIsSet);
-      this.setState({ intervalIsSet: null });
-    }
+    
   };
 
   // this will download all of the quizzes from the database and add them to this.state.quizzes array
@@ -106,6 +100,7 @@ class App extends Component {
       <div>
         <h1>Welcome to the Quiz Factory!</h1>
         <ul>
+          <button onClick={this.getDataFromDb}>Refresh Quiz List</button>
           {quizzes.length <= 0
             ? 'No quizzes exist right now. Why don\'t you make one? \:\)'
             : displayQuizzes

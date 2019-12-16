@@ -6,34 +6,51 @@ export default class QuizCreatorDisplay extends Component {
     constructor(props){
         super(props)
         this.state = {
-            questionList: ['T', 'B']
+            questionList: []
         };
+        this.getQuestionsFromDB = this.getQuestionsFromDB.bind(this);
     }
 
-    getQuestionsFromDB(currentQuiz) {
-        axios.get('http://localhost:3001/question/getQuestions', 
-        { containingQuiz: {currentQuiz}})
-        .then((question)=>this.setState({ questionList: question.data.matches }));
+    getQuestionsFromDB() {
+        console.log("this.props", this.props);
+        const currentQuiz = this.props.currentQuiz;
+        axios.get('http://localhost:3001/question/getQuestions', { 
+            params: {
+                containingQuiz: currentQuiz
+            }
+        })
+        .then((response)=>{
+            console.log("STATE AFTER GETTING DATABASE:",             this.state);
+            this.setState({ questionList: response.data.questions });
+
+        });
     }
 
     componentDidMount() {
-        this.getQuestionsFromDB(this.props.currentQuiz);
-        console.log("we proppin'");
+        this.getQuestionsFromDB();
+        
     }
+    componentWillUnmount() {
+        
+      };
 
     render() {
-        const { currentQuiz} = this.props;
+        const { currentQuiz } = this.props;
         const { questionList } = this.state;
         const displayQuestions = questionList.map((question)=> {
             return (
-                <li style={{ listStyleType: 'none' }}><h4>{question}</h4></li>
+                <li style={{ listStyleType: 'none' }}><h4>{question.questionText}</h4></li>
             )
         }) 
+
         return (
             <div>
+                <button onClick={this.getQuestionsFromDB}>
+                    Refresh Questions from Database
+                </button>
                 {displayQuestions}
 
-                <QuestionCreator />
+                <QuestionCreator currentQuiz={this.props.currentQuiz }/>
             </div>
         )
     }

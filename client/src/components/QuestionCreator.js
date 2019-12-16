@@ -6,16 +6,21 @@ class QuestionCreator extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            
         };
         this.handleInputChange = this.handleInputChange.bind(this);
+
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleInputChange(event) {
+        
         const target = event.target;
         const value = target.value;
         const name = target.name;
         this.setState({
-          [name]: value
+          [name]: value,
+          currentQuiz: this.props.currentQuiz
         })
         
     }
@@ -24,21 +29,21 @@ class QuestionCreator extends React.Component {
         event.preventDefault();
         
         const data = {
-            quizName: this.state.quizName,
             questionText: this.state.questionText,
             answerOne: this.state.answerOne,
             answerTwo: this.state.answerTwo,
             answerThree: this.state.answerThree,
             answerFour: this.state.answerFour,
             correctAnswer: this.state.correctAnswer,
-            containingQuiz: this.state.currentQuiz,
+            containingQuiz: this.props.currentQuiz,
         };
         
         axios.post('http://localhost:3001/question/newQuestion', data);
     
     }
-
+    
     render() {
+        
      return(
          <>
         <h2>Question Creator</h2>
@@ -96,7 +101,7 @@ class QuestionCreator extends React.Component {
         </div>
             
             <button type="submit" onClick={this.handleSubmit}>Submit First Question</button>
-       {this.props.display}
+       }
     </>
      );
     }

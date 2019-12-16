@@ -4,7 +4,7 @@ const Question = require('../src/models/questionModel')
 
 router.post('/newQuestion', (req, res) => {
     let question = new Question();
-    console.log(req.body.containingQuiz);
+    console.log(req.body);
 
     const { 
         questionText, 
@@ -32,12 +32,20 @@ router.post('/newQuestion', (req, res) => {
   });
 
 router.get('/getQuestions', (req, res) => {
+
+  const contain = req.query.containingQuiz;
+  if (contain){ 
+    Question.find({containingQuiz: {$eq: contain } }, (err, matches) => {
+      if(err) return res.json({success:false,error:err});
+      return res.json({success:true, questions: matches});
+      
+    });
+  } else {
+    console.log("No");
+    return res.json({success:false, questions: []}); 
+     
   
-  Question.find({truthiness: {$eq:'seventeen'}}, (err, matches) =>{
-    if(err) return res.json({success:false,error:err});
-    return res.json({success:true, matches: matches});
-    
-  });
+  }
 });
 
 
