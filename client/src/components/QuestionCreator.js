@@ -9,7 +9,6 @@ class QuestionCreator extends React.Component {
             
         };
         this.handleInputChange = this.handleInputChange.bind(this);
-
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -46,7 +45,6 @@ class QuestionCreator extends React.Component {
         
      return(
          <>
-        <h2>Question Creator</h2>
         <input 
             type="text" 
             onChange={this.handleInputChange} 
@@ -100,8 +98,8 @@ class QuestionCreator extends React.Component {
                 <input type="radio" name="correctAnswer" value="answerFour" onChange={this.handleInputChange}></input> 
         </div>
             
-            <button type="submit" onClick={this.handleSubmit}>Submit First Question</button>
-       }
+            <button type="submit" onClick={this.handleSubmit}>Submit Question</button>
+       
     </>
      );
     }

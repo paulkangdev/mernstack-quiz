@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import QuizCreator from './components/QuizCreator';
 import Toggle from './components/Toggle';
+import Modal from './components/Modal';
+import Portal from './components/Portal';
 
 class App extends Component {
   state = {
@@ -97,11 +99,11 @@ class App extends Component {
     });
           
     return (
-      <div>
+      <>
         <h1>Welcome to the Quiz Factory!</h1>
         <ul>
-          <button onClick={this.getDataFromDb}>Refresh Quiz List</button>
-          {quizzes.length <= 0
+          <button onClick={this.getDataFromDb}>Refresh Quiz List</button><br/>
+          {quizzes.length === 0
             ? 'No quizzes exist right now. Why don\'t you make one? \:\)'
             : displayQuizzes
           }
@@ -115,11 +117,21 @@ class App extends Component {
           />
           <button onClick={() => this.deleteFromDB(this.state.idToDelete)}>
             DELETE
-          </button>
-          <QuizCreator 
-          
-          />
-      </div>    
+          </button><br/>
+
+          <Toggle>
+            { ({on, toggle}) => (
+              <>
+                <button onClick={toggle}>
+                  Create a Quiz
+                </button>
+                <Modal on={on} toggle={toggle}>
+                  <QuizCreator/>
+                </Modal>
+              </>                      
+            )}  
+          </Toggle>
+      </>    
               
     );
   }

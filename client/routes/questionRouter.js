@@ -41,7 +41,7 @@ router.get('/getQuestions', (req, res) => {
       
     });
   } else {
-    console.log("No");
+    console.log("containingQuiz not defined");
     return res.json({success:false, questions: []}); 
      
   
