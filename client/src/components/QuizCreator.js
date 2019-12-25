@@ -6,6 +6,8 @@ import Toggle from './Toggle';
 import { runInThisContext } from 'vm';
 import Modal from './Modal';
 import Portal from './Portal';
+import styled from 'styled-components';
+
 
 var Question = require('../models/questionModel');
 var Quiz = require('../models/quizModel');
@@ -40,8 +42,6 @@ class QuizCreator extends React.Component {
         this.submitQuizData();
         
     };
-
-    
 
     displayQuestionCreator() {
     };
@@ -87,7 +87,9 @@ class QuizCreator extends React.Component {
             </>
 
             ) : 
-            <QuizCreatorDisplay currentQuiz={submitted}/>
+            <QuizGrid>
+                <QuizCreatorDisplay currentQuiz={submitted}/>
+            </QuizGrid>
             }
             
             </>
@@ -97,3 +99,8 @@ class QuizCreator extends React.Component {
 }
 
 export default QuizCreator;
+
+const QuizGrid = styled.div`
+    padding: 1rem;
+    
+`;

@@ -6,7 +6,6 @@ class QuestionCreator extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -26,7 +25,6 @@ class QuestionCreator extends React.Component {
 
     handleSubmit(event, quizID) {
         event.preventDefault();
-        
         const data = {
             questionText: this.state.questionText,
             answerOne: this.state.answerOne,
@@ -36,13 +34,10 @@ class QuestionCreator extends React.Component {
             correctAnswer: this.state.correctAnswer,
             containingQuiz: this.props.currentQuiz,
         };
-        
         axios.post('http://localhost:3001/question/newQuestion', data);
-    
     }
     
     render() {
-        
      return(
          <>
         <input 
@@ -61,7 +56,7 @@ class QuestionCreator extends React.Component {
                 style={{ width: '200px' }}
             />
          
-                Is this the CORRECT answer? <input type="radio" name="correctAnswer" value="answerOne" onChange={this.handleInputChange}></input> 
+                CORRECT answer <input type="radio" name="correctAnswer" value="answerOne" onChange={this.handleInputChange}></input> 
            
         </div>
         <div className="answer">
@@ -72,7 +67,7 @@ class QuestionCreator extends React.Component {
                 style={{ width: '200px' }}
             />
             
-                Is this the CORRECT answer? <input type="radio" name="correctAnswer" value="answerTwo" onChange={this.handleInputChange}></input> 
+                CORRECT answer <input type="radio" name="correctAnswer" value="answerTwo" onChange={this.handleInputChange}></input> 
            
         </div>
         <div className="answer">
@@ -83,7 +78,7 @@ class QuestionCreator extends React.Component {
                 style={{ width: '200px' }}
             />
         
-                Is this the CORRECT answer? <input type="radio" name="correctAnswer" value="answerThree" onChange={this.handleInputChange}></input> 
+                CORRECT answer <input type="radio" name="correctAnswer" value="answerThree" onChange={this.handleInputChange}></input> 
           
         </div>
         <div className="answer">
@@ -94,8 +89,7 @@ class QuestionCreator extends React.Component {
                 style={{ width: '200px' }}
             />
             
-            Is this the CORRECT answer? 
-                <input type="radio" name="correctAnswer" value="answerFour" onChange={this.handleInputChange}></input> 
+              CORRECT answer <input type="radio" name="correctAnswer" value="answerFour" onChange={this.handleInputChange}></input> 
         </div>
             
             <button type="submit" onClick={this.handleSubmit}>Submit Question</button>

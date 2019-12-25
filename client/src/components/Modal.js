@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import styled from 'styled-components';
 import Portal from './Portal';
 
 export default class Modal extends Component {
@@ -9,9 +9,10 @@ export default class Modal extends Component {
       <Portal>
           {on && (
             <>
-                
-                <div className="modal-body"><button onClick={toggle}>Close</button>
-                {children}</div>
+                <ModalWrapper>
+                  <button onClick={toggle}>Close</button>
+                  {children}
+                </ModalWrapper>
             </>
           )}
       </Portal>
@@ -19,11 +20,11 @@ export default class Modal extends Component {
   }
 }
 
-// const ModalWrapper = styled.div`
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   background: teal;
-// `;
+const ModalWrapper = styled.div`
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  width: 50%;
+  height: 50%;
+  background: gray;
+`;

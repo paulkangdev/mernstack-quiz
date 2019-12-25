@@ -4,6 +4,9 @@ import QuizCreator from './components/QuizCreator';
 import Toggle from './components/Toggle';
 import Modal from './components/Modal';
 import Portal from './components/Portal';
+import styled from 'styled-components';
+
+import QuizListDisplay from './components/QuizListDisplay';
 
 class App extends Component {
   state = {
@@ -20,14 +23,11 @@ class App extends Component {
 
   componentDidMount() {
     this.getDataFromDb();
-    
   }
 
-  componentWillUnmount() {
+  componentWillUpdate(){
     
-  };
-
-  // this will download all of the quizzes from the database and add them to this.state.quizzes array
+  }
   getDataFromDb = () => {
     fetch('http://localhost:3001/quiz/getQuiz')
       .then((quiz) => quiz.json())
@@ -35,41 +35,19 @@ class App extends Component {
   };
 
   createQuiz = (message) => {
-    
     let currentIds = this.state.quizzes.map((quiz) => quiz.id);
     let idToBeAdded = 0;
-    
     while (currentIds.includes(idToBeAdded)) {
       ++idToBeAdded;
     }
     
     axios.post('http://localhost:3001/quiz/newQuiz', {
-      
       name: message,
     });
     
   };
 
-  // to remove existing database information
-  deleteFromDB = (idTodelete) => {
-    parseInt(idTodelete);
-    let objIdToDelete = null;
-    this.state.quizzes.forEach((quiz) => {
-      if (quiz.id == idTodelete) {
-        objIdToDelete = quiz._id;
-              }
-    });
-
-    axios.delete('http://localhost:3001/quiz/deleteQuiz', {
-      data: {
-        id: objIdToDelete,
-      },
-      });
-  };
-
-  // our update method that uses our backend api
-  // to overwrite existing data base information
-  updateDB = (idToUpdate, updateToApply) => {
+updateDB = (idToUpdate, updateToApply) => {
     let objIdToUpdate = null;
     parseInt(idToUpdate);
     this.state.quizzes.forEach((dat) => {
@@ -84,53 +62,39 @@ class App extends Component {
     });
   };
 
-  
-  
-
   render() {
-    const { quizzes } = this.state;
-    
-    const displayQuizzes = quizzes.map((quiz) => {
-      return (<li style={{ padding: '10px' }} key={quiz._id}>
-        <span style={{ color: 'gray' }}> id: </span> {quiz._id} <br />
-        <span style={{ color: 'gray' }}> data: </span>
-        {quiz.name}
-      </li>);
-    });
+    const {quizzes} = this.state;
           
     return (
       <>
         <h1>Welcome to the Quiz Factory!</h1>
-        <ul>
-          <button onClick={this.getDataFromDb}>Refresh Quiz List</button><br/>
+        <QuizList>
+          
           {quizzes.length === 0
-            ? 'No quizzes exist right now. Why don\'t you make one? \:\)'
-            : displayQuizzes
+            ? <div><span>No quizzes exist right now. Why don't you make one? :)</span></div>
+            : <QuizListDisplay quizzes={quizzes} />
           }
-        </ul>
+          
+          <button onClick={this.getDataFromDb}>
+            Refresh Quiz List
+          </button>
+        </QuizList>
 
-        <input
-            type="text"
-            style={{ width: '200px' }}
-            onChange={(e) => this.setState({ idToDelete: e.target.value })}
-            placeholder="put id of item to delete here"
-          />
-          <button onClick={() => this.deleteFromDB(this.state.idToDelete)}>
-            DELETE
-          </button><br/>
-
-          <Toggle>
-            { ({on, toggle}) => (
-              <>
+        <Toggle>
+          { ({on, toggle}) => (
+            <>
+              {!on ? 
                 <button onClick={toggle}>
                   Create a Quiz
                 </button>
+                :
                 <Modal on={on} toggle={toggle}>
                   <QuizCreator/>
                 </Modal>
-              </>                      
-            )}  
-          </Toggle>
+              }
+            </>                      
+          )}  
+        </Toggle>
       </>    
               
     );
@@ -138,3 +102,32 @@ class App extends Component {
 }
 
 export default App;
+
+const QuizList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  margin:0 auto;
+  padding: 0;
+  >span {
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin: 1rem;
+    padding: 1rem;
+  }
+  >button {
+    border: 1px solid black;
+    border-radius: 5px;
+    background: white;
+    margin: 5px;
+    padding: 10px;
+    width: 5rem; 
+  }
+  >button:hover {
+    background: whitesmoke;
+    cursor: pointer;
+  }
+  >button:active {
+    background: black;
+  }
+`;
+

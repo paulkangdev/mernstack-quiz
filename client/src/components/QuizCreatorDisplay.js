@@ -12,7 +12,6 @@ export default class QuizCreatorDisplay extends Component {
     }
 
     getQuestionsFromDB() {
-        console.log("this.props", this.props);
         const currentQuiz = this.props.currentQuiz;
         axios.get('http://localhost:3001/question/getQuestions', { 
             params: {
@@ -20,20 +19,14 @@ export default class QuizCreatorDisplay extends Component {
             }
         })
         .then((response)=>{
-            console.log("STATE AFTER GETTING DATABASE:",             this.state);
             this.setState({ questionList: response.data.questions });
-
         });
     }
 
     componentDidMount() {
         this.getQuestionsFromDB();
-        
     }
-    componentWillUnmount() {
-        
-      };
-
+   
     render() {
         const { currentQuiz } = this.props;
         const { questionList } = this.state;
@@ -49,8 +42,7 @@ export default class QuizCreatorDisplay extends Component {
                     Refresh Questions from Database
                 </button>
                 {displayQuestions}
-
-                <QuestionCreator currentQuiz={this.props.currentQuiz }/>
+                <QuestionCreator currentQuiz={currentQuiz}/>
             </div>
         )
     }
