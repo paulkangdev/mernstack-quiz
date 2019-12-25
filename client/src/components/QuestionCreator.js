@@ -6,6 +6,7 @@ class QuestionCreator extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            numberOfQuestions: 0,
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,16 +26,22 @@ class QuestionCreator extends React.Component {
 
     handleSubmit(event, quizID) {
         event.preventDefault();
-        const data = {
-            questionText: this.state.questionText,
-            answerOne: this.state.answerOne,
-            answerTwo: this.state.answerTwo,
-            answerThree: this.state.answerThree,
-            answerFour: this.state.answerFour,
-            correctAnswer: this.state.correctAnswer,
-            containingQuiz: this.props.currentQuiz,
-        };
-        axios.post('http://localhost:3001/question/newQuestion', data);
+        if(this.state.numberOfQuestions<5){
+            const data = {
+                questionText: this.state.questionText,
+                answerOne: this.state.answerOne,
+                answerTwo: this.state.answerTwo,
+                answerThree: this.state.answerThree,
+                answerFour: this.state.answerFour,
+                correctAnswer: this.state.correctAnswer,
+                containingQuiz: this.props.currentQuiz,
+            };
+            axios.post('http://localhost:3001/question/newQuestion', data);
+            let newNum = this.state.numberOfQuestions + 1;
+            this.setState({numberOfQuestions: newNum});
+        } else {
+            window.alert("Only 5 questions allowed, thanks! :)")
+        }
     }
     
     render() {
@@ -55,7 +62,6 @@ class QuestionCreator extends React.Component {
                 placeholder="Enter your ANSWER here!" 
                 style={{ width: '200px' }}
             />
-         
                 CORRECT answer <input type="radio" name="correctAnswer" value="answerOne" onChange={this.handleInputChange}></input> 
            
         </div>
@@ -66,7 +72,6 @@ class QuestionCreator extends React.Component {
                 placeholder="Enter your ANSWER here!" 
                 style={{ width: '200px' }}
             />
-            
                 CORRECT answer <input type="radio" name="correctAnswer" value="answerTwo" onChange={this.handleInputChange}></input> 
            
         </div>
@@ -77,7 +82,6 @@ class QuestionCreator extends React.Component {
                 placeholder="Enter your ANSWER here!" 
                 style={{ width: '200px' }}
             />
-        
                 CORRECT answer <input type="radio" name="correctAnswer" value="answerThree" onChange={this.handleInputChange}></input> 
           
         </div>
@@ -88,12 +92,9 @@ class QuestionCreator extends React.Component {
                 placeholder="Enter your ANSWER here!" 
                 style={{ width: '200px' }}
             />
-            
               CORRECT answer <input type="radio" name="correctAnswer" value="answerFour" onChange={this.handleInputChange}></input> 
         </div>
-            
             <button type="submit" onClick={this.handleSubmit}>Submit Question</button>
-       
     </>
      );
     }

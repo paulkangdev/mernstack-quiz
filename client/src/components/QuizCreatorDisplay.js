@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import QuestionCreator from './QuestionCreator'
+import QuestionListDisplay from './QuestionListDisplay'
 import axios from 'axios';
 
 export default class QuizCreatorDisplay extends Component {
@@ -41,7 +42,9 @@ export default class QuizCreatorDisplay extends Component {
                 <button onClick={this.getQuestionsFromDB}>
                     Refresh Questions from Database
                 </button>
-                {displayQuestions}
+                {questionList ? 
+                <QuestionListDisplay questions={questionList} />
+                : <div>Make some new Questions!</div>}
                 <QuestionCreator currentQuiz={currentQuiz}/>
             </div>
         )

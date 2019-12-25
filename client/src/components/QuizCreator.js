@@ -74,7 +74,6 @@ class QuizCreator extends React.Component {
             <>
             <h1>Quiz Creator: {this.state.quizName}</h1>
             {!submitted ? ( <>
-            
             <input name="quizName"
                 type="text" 
                 onChange={this.handleInputChange}
@@ -85,13 +84,9 @@ class QuizCreator extends React.Component {
                     Submit Quiz
             </button>
             </>
-
             ) : 
-            <QuizGrid>
                 <QuizCreatorDisplay currentQuiz={submitted}/>
-            </QuizGrid>
             }
-            
             </>
             
         );
@@ -99,8 +94,3 @@ class QuizCreator extends React.Component {
 }
 
 export default QuizCreator;
-
-const QuizGrid = styled.div`
-    padding: 1rem;
-    
-`;

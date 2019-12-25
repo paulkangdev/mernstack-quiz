@@ -1,31 +1,31 @@
 import React, { Component } from 'react'
-import DeleteQuizButton from './DeleteQuizButton';
+import DeleteQuestionButton from './DeleteQuestionButton';
 import styled from 'styled-components';
 
-export default class QuizListDisplay extends Component {
+export default class QuestionListDisplay extends Component {
     render() {
-        const {quizzes} = this.props;
+        const {questions} = this.props;
         
         return (
-            quizzes.map(quiz => (
+            questions.map(question => (
                 <div>
-                    <QuizInList key={quiz._id}>
+                    <QuestionInList key={question._id}>
                         <div>
-                            <span>{quiz.name}</span>
+                            <span>{question.name}</span>
                         </div>
                         <div>
-                        <button>Play this Quiz!</button>
-                        <button>Edit</button>
-                        <DeleteQuizButton deleteKey={quiz._id}>
-                            { ({removeQuiz}) => (
+                        
+                        <button>FakeEdit</button>
+                        <DeleteQuestionButton deleteKey={question._id}>
+                            { ({removeQuestion}) => (
                                 <>
-                                <button onClick={removeQuiz}>Delete</button>
+                                <button>FakeDelete</button>
                                 </>
                                 )
                             }
-                        </DeleteQuizButton>
+                        </DeleteQuestionButton>
                         </div>
-                    </QuizInList>
+                    </QuestionInList>
                 </div>
                 )        
             )
@@ -37,7 +37,7 @@ export default class QuizListDisplay extends Component {
 
 
     
-const QuizInList = styled.li`
+const QuestionInList = styled.li`
     border: 1px solid black;
     border-radius: 5px;
     display: flex;
