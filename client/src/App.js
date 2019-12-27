@@ -64,7 +64,6 @@ updateDB = (idToUpdate, updateToApply) => {
 
   render() {
     const {quizzes} = this.state;
-          
     return (
       <>
         <h1>Welcome to the Quiz Factory!</h1>

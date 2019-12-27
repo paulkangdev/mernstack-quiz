@@ -2,14 +2,20 @@ import React, { Component } from 'react'
 import QuestionCreator from './QuestionCreator'
 import QuestionListDisplay from './QuestionListDisplay'
 import axios from 'axios';
+import styled from 'styled-components';
+
 
 export default class QuizCreatorDisplay extends Component {
     constructor(props){
         super(props)
         this.state = {
-            questionList: []
+            questionList: [],
+            status: 'initial',
         };
+        this.doneSubmitting = this.doneSubmitting.bind(this);
         this.getQuestionsFromDB = this.getQuestionsFromDB.bind(this);
+        this.renderSwitch = this.renderSwitch.bind(this);
+        this.updateDisplay = this.updateDisplay.bind(this);
     }
 
     getQuestionsFromDB() {
@@ -21,32 +27,75 @@ export default class QuizCreatorDisplay extends Component {
         })
         .then((response)=>{
             this.setState({ questionList: response.data.questions });
+            
         });
+        
     }
 
     componentDidMount() {
         this.getQuestionsFromDB();
     }
+
+    doneSubmitting(){
+        this.getQuestionsFromDB();
+        if (this.state.questionList.length<1){
+            window.alert("Need to submit at least one question!");
+            return;
+        }
+        else{this.setState({status: 'doneQuestions'});}
+    }
+
+    renderSwitch(status, questionList, currentQuiz) {
+        this.getQuestionsFromDB();
+        switch( status ) {
+            case 'initial':
+                if (this.state.questionList.length === 5){
+                    this.setState({status: 'fiveQuestions'});
+                }    
+                return(
+                <>{questionList.length> 0 ? 
+                    <>
+                    <QuestionListDisplay questions={questionList} />
+                    </> : 
+                    <><div>Make some new Questions!</div></>}
+                    <QuestionCreator updateDisplay={this.updateDisplay} currentQuiz={currentQuiz}/>
+                    <button onClick={this.doneSubmitting}>Done Submitting Questions</button>
+                </>);
+            case 'fiveQuestions':
+                return(
+                <>
+                    <QuestionListDisplay questions={questionList} />
+                    <div>You've reached the limit of five questions!</div>
+                    <button onClick={this.doneSubmitting}>Done Submitting Questions</button>
+
+                </>);
+            case 'doneQuestions':
+                return <div>Submitted! Thank you</div>;
+            default:
+                return <div>Status is not defined properly, check your logs :(</div>;
+                
+        }
+    }
    
+    updateDisplay() {
+        this.renderSwitch(this.state.status, this.state.questionList, this.state.currentQuiz);
+    }
+
     render() {
         const { currentQuiz } = this.props;
-        const { questionList } = this.state;
-        const displayQuestions = questionList.map((question)=> {
-            return (
-                <li style={{ listStyleType: 'none' }}><h4>{question.questionText}</h4></li>
-            )
-        }) 
-
+        const { questionList, status, questionsSubmitted } = this.state;
+        
         return (
-            <div>
-                <button onClick={this.getQuestionsFromDB}>
-                    Refresh Questions from Database
-                </button>
-                {questionList ? 
-                <QuestionListDisplay questions={questionList} />
-                : <div>Make some new Questions!</div>}
-                <QuestionCreator currentQuiz={currentQuiz}/>
-            </div>
+            <PadDiv>
+                {this.renderSwitch(status, questionList, currentQuiz )}
+            </PadDiv>
         )
     }
 }
+
+
+const PadDiv = styled.div`
+    font-family: arial;
+    font-weight: bold;
+    padding: 1rem;
+`;

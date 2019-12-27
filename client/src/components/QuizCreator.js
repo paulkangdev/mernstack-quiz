@@ -6,7 +6,6 @@ import Toggle from './Toggle';
 import { runInThisContext } from 'vm';
 import Modal from './Modal';
 import Portal from './Portal';
-import styled from 'styled-components';
 
 
 var Question = require('../models/questionModel');
@@ -69,7 +68,9 @@ class QuizCreator extends React.Component {
         
     
     render() {
+        
         var submitted = this.state.currentQuiz;
+        
         return ( 
             <>
             <h1>Quiz Creator: {this.state.quizName}</h1>

@@ -4,8 +4,8 @@ import styled from 'styled-components';
 
 export default class QuizListDisplay extends Component {
     render() {
-        const {quizzes} = this.props;
-        
+        const {quizzes, currentQuiz} = this.props;
+        console.log("QLD: ", currentQuiz);
         return (
             quizzes.map(quiz => (
                 <div>
@@ -16,7 +16,7 @@ export default class QuizListDisplay extends Component {
                         <div>
                         <button>Play this Quiz!</button>
                         <button>Edit</button>
-                        <DeleteQuizButton deleteKey={quiz._id}>
+                        <DeleteQuizButton deleteKey={quiz._id} currentQuiz={currentQuiz}>
                             { ({removeQuiz}) => (
                                 <>
                                 <button onClick={removeQuiz}>Delete</button>

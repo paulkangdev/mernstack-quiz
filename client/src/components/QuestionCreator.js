@@ -42,6 +42,12 @@ class QuestionCreator extends React.Component {
         } else {
             window.alert("Only 5 questions allowed, thanks! :)")
         }
+        this.updatePropsDisplay();
+    }
+
+    updatePropsDisplay(){
+        this.props.updateDisplay();
+        
     }
     
     render() {
