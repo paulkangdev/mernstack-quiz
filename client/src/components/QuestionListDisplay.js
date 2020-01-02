@@ -8,10 +8,10 @@ export default class QuestionListDisplay extends Component {
         
         return (
             questions.map(question => (
-                <div>
+                <div key={question._id}>
                     <QuestionInList key={question._id}>
                         <div>
-                            <span>{question.name}</span>
+                            <span>{question.questionText}</span>
                         </div>
                         <div>
                         

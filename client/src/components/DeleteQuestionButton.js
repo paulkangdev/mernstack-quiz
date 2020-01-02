@@ -8,7 +8,13 @@ export default class DeleteQuestionButton extends Component {
             data: {
                 id: this.props.deleteKey,
             },
-         });
+         }
+         )
+         .then((res)=>{
+            this.props.updateQuizDB()
+        }
+        );
+     
     }
 
     render() {

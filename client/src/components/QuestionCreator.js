@@ -24,10 +24,11 @@ class QuestionCreator extends React.Component {
         
     }
 
-    handleSubmit(event, quizID) {
+    handleSubmit(event) {
         event.preventDefault();
         if(this.state.numberOfQuestions<5){
             const data = {
+                key: this.props.currentQuiz,
                 questionText: this.state.questionText,
                 answerOne: this.state.answerOne,
                 answerTwo: this.state.answerTwo,
@@ -36,19 +37,21 @@ class QuestionCreator extends React.Component {
                 correctAnswer: this.state.correctAnswer,
                 containingQuiz: this.props.currentQuiz,
             };
-            axios.post('http://localhost:3001/question/newQuestion', data);
-            let newNum = this.state.numberOfQuestions + 1;
-            this.setState({numberOfQuestions: newNum});
+            axios.post('http://localhost:3001/question/newQuestion', data)
+            .then((response => {
+                this.props.updateDisplay();
+                let newNum = this.state.numberOfQuestions + 1;
+                this.setState({numberOfQuestions: newNum});
+            }));
         } else {
             window.alert("Only 5 questions allowed, thanks! :)")
         }
-        this.updatePropsDisplay();
     }
 
-    updatePropsDisplay(){
-        this.props.updateDisplay();
+    // updatePropsDisplay(){
+    //     this.props.updateDisplay();
         
-    }
+    // }
     
     render() {
      return(

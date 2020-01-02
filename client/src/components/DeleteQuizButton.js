@@ -3,6 +3,7 @@ import axios from 'axios';
 
 export default class DeleteQuizButton extends Component {
     removeQuiz = () => {
+        console.log("DELETE:", this.props.currentQuiz, this.props.deleteKey);
         if (this.props.currentQuiz === this.props.deleteKey){
             console.log("Cannot delete active quiz");
             return;
@@ -11,13 +12,19 @@ export default class DeleteQuizButton extends Component {
             data: {
                 id: this.props.deleteKey,
             },
+         }
+         )
+         .then(()=>{
+             this.props.updateQuizDB()
          });
     }
 
     render() {
         const {children} = this.props;
-        return children({
-            removeQuiz: this.removeQuiz
-        });
+        return (
+            children({
+                removeQuiz: this.removeQuiz
+                })
+        )
     }
 }

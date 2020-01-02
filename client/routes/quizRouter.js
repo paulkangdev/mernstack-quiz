@@ -20,11 +20,18 @@ router.get('/getQuiz', (req, res) => {
   
   router.delete('/deleteQuiz', (req, res) => {
     const { id } = req.body;
-    console.log(req.body);
-    Quiz.findOneAndRemove({ _id:id }, (err) => {
-      if (err) return res.send(err);
-      return res.json({ success: true });
+    return Quiz.findOneAndDelete({ _id:id }, (err) => {
+     
+      if (err) {
+        return res.send(err);
+      } else { 
+        console.log("No err?");
+        return res.json({ success: true });
+      }
+      
     });
+    
+   
   });
   
   router.post('/newQuiz', (req, res) => {

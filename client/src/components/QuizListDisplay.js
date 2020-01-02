@@ -5,18 +5,18 @@ import styled from 'styled-components';
 export default class QuizListDisplay extends Component {
     render() {
         const {quizzes, currentQuiz} = this.props;
-        console.log("QLD: ", currentQuiz);
+        console.log("QLD:", {currentQuiz}, quizzes);
         return (
             quizzes.map(quiz => (
                 <div>
-                    <QuizInList key={quiz._id}>
+                    <QuizInList key={quiz._id} currentQuiz={currentQuiz}>
                         <div>
                             <span>{quiz.name}</span>
                         </div>
                         <div>
                         <button>Play this Quiz!</button>
                         <button>Edit</button>
-                        <DeleteQuizButton deleteKey={quiz._id} currentQuiz={currentQuiz}>
+                        <DeleteQuizButton deleteKey={quiz._id} currentQuiz={currentQuiz} updateQuizDB={this.props.updateQuizDB}>
                             { ({removeQuiz}) => (
                                 <>
                                 <button onClick={removeQuiz}>Delete</button>
@@ -33,9 +33,6 @@ export default class QuizListDisplay extends Component {
         );
     }
 }
-
-
-
     
 const QuizInList = styled.li`
     border: 1px solid black;
@@ -51,6 +48,6 @@ const QuizInList = styled.li`
     
         > span{
             color: blue;
+       }
     }
-}
 `;

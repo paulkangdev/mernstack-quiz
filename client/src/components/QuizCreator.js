@@ -19,11 +19,11 @@ class QuizCreator extends React.Component {
         this.state = {
             id: '',
             questionList: [],
+            quizName: '',
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.submitQuizData = this.submitQuizData.bind(this);
-        this.displayQuestionCreator = this.displayQuestionCreator.bind(this);   
     }
 
     handleInputChange(event){
@@ -38,15 +38,15 @@ class QuizCreator extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        this.submitQuizData();
+        if(this.state.quizName.trim()){
+            this.submitQuizData();
+        } else {
+            window.alert("Please enter a name for your quiz!");
+        }
         
     };
 
-    displayQuestionCreator() {
-    };
-
     submitQuizData() {
-        var currentQuiz;
         const data = {
             quizName: this.state.quizName,
             questionText: this.state.questionText,
@@ -59,17 +59,19 @@ class QuizCreator extends React.Component {
         
         axios.post('http://localhost:3001/quiz/newQuiz', data)
         .then((response) =>{
-            currentQuiz = response.data.quiz._id;
-           this.setState({currentQuiz: currentQuiz});
+            let currentQuiz = response.data.quiz._id;
+            this.props.updateQuizDB();
+            this.props.updateCurrentQuiz(currentQuiz);
+
         }, (error) => {
             console.log(error);
         });
-    }
         
+    }
     
     render() {
         
-        var submitted = this.state.currentQuiz;
+        var submitted = this.props.currentQuiz;
         
         return ( 
             <>
@@ -79,7 +81,7 @@ class QuizCreator extends React.Component {
                 type="text" 
                 onChange={this.handleInputChange}
                 placeholder="Please Name Your Quiz"
-                style={{ width: '200px' }}>
+                style={{ width: '200px' }} >
             </input>
             <button onClick={this.handleSubmit}>
                     Submit Quiz

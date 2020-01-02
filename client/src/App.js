@@ -25,9 +25,6 @@ class App extends Component {
     this.getDataFromDb();
   }
 
-  componentWillUpdate(){
-    
-  }
   getDataFromDb = () => {
     fetch('http://localhost:3001/quiz/getQuiz')
       .then((quiz) => quiz.json())
@@ -62,8 +59,12 @@ updateDB = (idToUpdate, updateToApply) => {
     });
   };
 
+  updateRootCurrentQuiz = (current) => {
+    this.setState({currentQuiz: current});
+  }
+
   render() {
-    const {quizzes} = this.state;
+    const {quizzes, currentQuiz} = this.state;
     return (
       <>
         <h1>Welcome to the Quiz Factory!</h1>
@@ -71,12 +72,9 @@ updateDB = (idToUpdate, updateToApply) => {
           
           {quizzes.length === 0
             ? <div><span>No quizzes exist right now. Why don't you make one? :)</span></div>
-            : <QuizListDisplay quizzes={quizzes} />
+            : <QuizListDisplay quizzes={quizzes} currentQuiz={currentQuiz} updateQuizDB={this.getDataFromDb}/>
           }
           
-          <button onClick={this.getDataFromDb}>
-            Refresh Quiz List
-          </button>
         </QuizList>
 
         <Toggle>
@@ -88,7 +86,10 @@ updateDB = (idToUpdate, updateToApply) => {
                 </button>
                 :
                 <Modal on={on} toggle={toggle}>
-                  <QuizCreator/>
+                  <QuizCreator 
+                  currentQuiz={currentQuiz}
+                  updateCurrentQuiz={this.updateRootCurrentQuiz}
+                  updateQuizDB={this.getDataFromDb}/>
                 </Modal>
               }
             </>                      

@@ -20,6 +20,7 @@ export default class QuizCreatorDisplay extends Component {
 
     getQuestionsFromDB() {
         const currentQuiz = this.props.currentQuiz;
+        console.log("questions list:", currentQuiz);
         axios.get('http://localhost:3001/question/getQuestions', { 
             params: {
                 containingQuiz: currentQuiz
@@ -46,21 +47,31 @@ export default class QuizCreatorDisplay extends Component {
     }
 
     renderSwitch(status, questionList, currentQuiz) {
-        this.getQuestionsFromDB();
         switch( status ) {
             case 'initial':
                 if (this.state.questionList.length === 5){
                     this.setState({status: 'fiveQuestions'});
                 }    
                 return(
-                <>{questionList.length> 0 ? 
                     <>
-                    <QuestionListDisplay questions={questionList} />
-                    </> : 
-                    <><div>Make some new Questions!</div></>}
-                    <QuestionCreator updateDisplay={this.updateDisplay} currentQuiz={currentQuiz}/>
-                    <button onClick={this.doneSubmitting}>Done Submitting Questions</button>
-                </>);
+                        {questionList.length>0 ? 
+                        <>
+                        <QuestionListDisplay questions={questionList} />
+                    </> 
+                    : <>
+                        <div>Make some new Questions!</div>
+                    </>
+                        }
+                    <QuestionCreator 
+                        updateDisplay={this.updateDisplay} 
+                        currentQuiz={currentQuiz}
+                    />
+                    <button 
+                        onClick={this.doneSubmitting}>
+                        Done Submitting Questions
+                    </button>
+                </>
+                );
             case 'fiveQuestions':
                 return(
                 <>
@@ -78,12 +89,14 @@ export default class QuizCreatorDisplay extends Component {
     }
    
     updateDisplay() {
-        this.renderSwitch(this.state.status, this.state.questionList, this.state.currentQuiz);
+        console.log(this.state);
+        this.getQuestionsFromDB();
+        console.log(this.state);
     }
 
     render() {
         const { currentQuiz } = this.props;
-        const { questionList, status, questionsSubmitted } = this.state;
+        const { questionList, status } = this.state;
         
         return (
             <PadDiv>
