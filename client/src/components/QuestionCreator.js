@@ -26,6 +26,9 @@ class QuestionCreator extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
+        if(!this.checkIfCorrectAnswerExists() || !this.checkIfQuestionHasName()){
+            return;
+        }
         if(this.state.numberOfQuestions<5){
             const data = {
                 key: this.props.currentQuiz,
@@ -39,20 +42,47 @@ class QuestionCreator extends React.Component {
             };
             axios.post('http://localhost:3001/question/newQuestion', data)
             .then((response => {
-                this.props.updateDisplay();
+                
                 let newNum = this.state.numberOfQuestions + 1;
                 this.setState({numberOfQuestions: newNum});
+                this.resetInputValues();
+                this.props.updateDisplay();
             }));
         } else {
             window.alert("Only 5 questions allowed, thanks! :)")
         }
     }
 
-    // updatePropsDisplay(){
-    //     this.props.updateDisplay();
-        
-    // }
-    
+    checkIfCorrectAnswerExists(){
+        if(!this.state.correctAnswer || this.state.correctAnswer === ''){
+            window.alert("Need to designate a correct answer!")
+            return false;
+        } else{
+            return true;
+        }
+    }
+
+    checkIfQuestionHasName(){
+        if(!(this.state.questionText).trim()){
+            window.alert("Need to ask a question!");
+            return false;
+        } else{
+            return true;
+        }
+    }
+
+    resetInputValues(){
+        var inputs = document.querySelectorAll('input');
+        var inputsArray = [].slice.call(inputs);
+        for(var i=0; i<inputsArray.length;i++){
+            inputsArray[i].value = '';
+                if(inputsArray[i].type==='radio'){
+                    inputsArray[i].checked=false;
+                }
+            this.setState({[inputsArray[i].name]: [inputsArray[i].value]});
+        }
+        return;
+    }
     render() {
      return(
          <>

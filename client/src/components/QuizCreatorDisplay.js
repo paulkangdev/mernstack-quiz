@@ -20,7 +20,6 @@ export default class QuizCreatorDisplay extends Component {
 
     getQuestionsFromDB() {
         const currentQuiz = this.props.currentQuiz;
-        console.log("questions list:", currentQuiz);
         axios.get('http://localhost:3001/question/getQuestions', { 
             params: {
                 containingQuiz: currentQuiz
@@ -28,9 +27,7 @@ export default class QuizCreatorDisplay extends Component {
         })
         .then((response)=>{
             this.setState({ questionList: response.data.questions });
-            
         });
-        
     }
 
     componentDidMount() {
@@ -54,12 +51,13 @@ export default class QuizCreatorDisplay extends Component {
                 }    
                 return(
                     <>
-                        {questionList.length>0 ? 
+                        {questionList.length > 0 ? 
                         <>
                         <QuestionListDisplay questions={questionList} />
                     </> 
                     : <>
                         <div>Make some new Questions!</div>
+                        <p></p>
                     </>
                         }
                     <QuestionCreator 
@@ -89,9 +87,7 @@ export default class QuizCreatorDisplay extends Component {
     }
    
     updateDisplay() {
-        console.log(this.state);
         this.getQuestionsFromDB();
-        console.log(this.state);
     }
 
     render() {
