@@ -5,7 +5,6 @@ import styled from 'styled-components';
 export default class QuizListDisplay extends Component {
     render() {
         const {quizzes, currentQuiz} = this.props;
-        console.log("QLD:", {currentQuiz}, quizzes);
         return (
             quizzes.map(quiz => (
                 <div>

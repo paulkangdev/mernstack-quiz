@@ -10,6 +10,9 @@ class QuestionCreator extends React.Component {
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.checkIfQuestionHasName = this.checkIfQuestionHasName.bind(this);
+        this.checkIfCorrectAnswerExists = this.checkIfCorrectAnswerExists.bind(this);
+        this.resetInputValues = this.resetInputValues.bind(this);
     }
 
     handleInputChange(event) {
@@ -42,11 +45,11 @@ class QuestionCreator extends React.Component {
             };
             axios.post('http://localhost:3001/question/newQuestion', data)
             .then((response => {
-                
+                this.props.updateDisplay();
                 let newNum = this.state.numberOfQuestions + 1;
                 this.setState({numberOfQuestions: newNum});
                 this.resetInputValues();
-                this.props.updateDisplay();
+                console.log(this.state);
             }));
         } else {
             window.alert("Only 5 questions allowed, thanks! :)")
@@ -63,7 +66,7 @@ class QuestionCreator extends React.Component {
     }
 
     checkIfQuestionHasName(){
-        if(!(this.state.questionText).trim()){
+        if(!(this.state.questionText) || this.state.questionText===''){
             window.alert("Need to ask a question!");
             return false;
         } else{
@@ -79,7 +82,7 @@ class QuestionCreator extends React.Component {
                 if(inputsArray[i].type==='radio'){
                     inputsArray[i].checked=false;
                 }
-            this.setState({[inputsArray[i].name]: [inputsArray[i].value]});
+            this.setState({[inputsArray[i].name]: inputsArray[i].value});
         }
         return;
     }

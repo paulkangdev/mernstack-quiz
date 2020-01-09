@@ -3,7 +3,6 @@ import axios from 'axios';
 import QuizCreator from './components/QuizCreator';
 import Toggle from './components/Toggle';
 import Modal from './components/Modal';
-import Portal from './components/Portal';
 import styled from 'styled-components';
 
 import QuizListDisplay from './components/QuizListDisplay';
@@ -45,12 +44,13 @@ class App extends Component {
   };
 
 updateDB = (idToUpdate, updateToApply) => {
-    let objIdToUpdate = null;
+    let objIdToUpdate;
     parseInt(idToUpdate);
     this.state.quizzes.forEach((dat) => {
-      if (dat.id == idToUpdate) {
+      if (dat.id === idToUpdate) {
         objIdToUpdate = dat._id;
       }
+      console.log(objIdToUpdate);
     });
 
     axios.post('http://localhost:3001/quiz/updateQuiz', {
@@ -69,14 +69,11 @@ updateDB = (idToUpdate, updateToApply) => {
       <>
         <h1>Welcome to the Quiz Factory!</h1>
         <QuizList>
-          
           {quizzes.length === 0
             ? <div><span>No quizzes exist right now. Why don't you make one? :)</span></div>
             : <QuizListDisplay quizzes={quizzes} currentQuiz={currentQuiz} updateQuizDB={this.getDataFromDb}/>
           }
-          
         </QuizList>
-
         <Toggle>
           { ({on, toggle}) => (
             <>
@@ -96,14 +93,13 @@ updateDB = (idToUpdate, updateToApply) => {
           )}  
         </Toggle>
       </>    
-              
     );
   }
 }
 
 export default App;
 
-const QuizList = styled.ul`
+const QuizList = styled.div`
   display: flex;
   flex-direction: column;
   margin:0 auto;

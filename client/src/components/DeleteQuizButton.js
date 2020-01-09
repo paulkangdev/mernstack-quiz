@@ -3,9 +3,7 @@ import axios from 'axios';
 
 export default class DeleteQuizButton extends Component {
     removeQuiz = () => {
-        console.log("DELETE:", this.props.currentQuiz, this.props.deleteKey);
         if (this.props.currentQuiz === this.props.deleteKey){
-            console.log("Cannot delete active quiz");
             return;
         }
         axios.delete('http://localhost:3001/quiz/deleteQuiz', {
