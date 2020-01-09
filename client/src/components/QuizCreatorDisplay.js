@@ -27,6 +27,8 @@ export default class QuizCreatorDisplay extends Component {
         })
         .then((response)=>{
             this.setState({ questionList: response.data.questions });
+            console.log('length:',this.state.questionList.length);
+
         });
     }
 
@@ -62,6 +64,7 @@ export default class QuizCreatorDisplay extends Component {
                         }
                     <QuestionCreator 
                         updateDisplay={this.updateDisplay} 
+                        numQuestions={this.state.questionList.length}
                         currentQuiz={currentQuiz}
                     />
                     <button 

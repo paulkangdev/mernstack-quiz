@@ -32,7 +32,6 @@ class QuestionCreator extends React.Component {
         if(!this.checkIfCorrectAnswerExists() || !this.checkIfQuestionHasName()){
             return;
         }
-        if(this.state.numberOfQuestions<5){
             const data = {
                 key: this.props.currentQuiz,
                 questionText: this.state.questionText,
@@ -45,15 +44,12 @@ class QuestionCreator extends React.Component {
             };
             axios.post('http://localhost:3001/question/newQuestion', data)
             .then((response => {
-                this.props.updateDisplay();
-                let newNum = this.state.numberOfQuestions + 1;
-                this.setState({numberOfQuestions: newNum});
+                // let newNum = this.state.numberOfQuestions + 1;
+                // this.setState({numberOfQuestions: newNum});
                 this.resetInputValues();
-                console.log(this.state);
+                this.props.updateDisplay();
             }));
-        } else {
-            window.alert("Only 5 questions allowed, thanks! :)")
-        }
+        
     }
 
     checkIfCorrectAnswerExists(){
