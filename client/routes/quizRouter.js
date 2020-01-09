@@ -25,7 +25,6 @@ router.get('/getQuiz', (req, res) => {
       if (err) {
         return res.send(err);
       } else { 
-        console.log("No err?");
         return res.json({ success: true });
       }
       
@@ -45,7 +44,6 @@ router.get('/getQuiz', (req, res) => {
     quiz.save((err,quiz) => {
       if (err) return res.json({ success: false, error: err });
      else {
-       console.log(quiz);
        return res.json({success: true, quiz: quiz});
       }
     });
@@ -71,7 +69,6 @@ router.get('/getQuiz', (req, res) => {
 
     // question.save((err) => {
     //   if (err) return res.json({ success: false, error: err });
-    //     console.log("We savin' QUESTION");
     
     // });
 

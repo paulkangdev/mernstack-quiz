@@ -4,7 +4,6 @@ const Question = require('../src/models/questionModel')
 
 router.post('/newQuestion', (req, res) => {
     let question = new Question();
-    console.log(req.body);
 
     const { 
         questionText, 
@@ -26,7 +25,6 @@ router.post('/newQuestion', (req, res) => {
     
     question.save((err) => {
       if (err) return res.json({ success: false, error: err });
-        console.log("We savin questions");
       return res.json({ success: true });
     });
   });
@@ -41,11 +39,24 @@ router.get('/getQuestions', (req, res) => {
       
     });
   } else {
-    console.log("containingQuiz not defined");
     return res.json({success:false, questions: []}); 
      
   
   }
+});
+
+router.delete('/deleteQuestion', (req, res) => {
+  const { id } = req.body;
+  return Question.findOneAndDelete({ _id:id }, (err) => {
+    if (err) {
+      return res.send(err);
+    } else { 
+      return res.json({ success: true });
+    }
+    
+  });
+  
+ 
 });
 
 

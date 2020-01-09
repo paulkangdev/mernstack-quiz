@@ -53,7 +53,7 @@ export default class QuizCreatorDisplay extends Component {
                     <>
                         {questionList.length > 0 ? 
                         <>
-                        <QuestionListDisplay questions={questionList} />
+                        <QuestionListDisplay updateDisplay={this.updateDisplay} questions={questionList} />
                     </> 
                     : <>
                         <div>Make some new Questions!</div>
@@ -73,7 +73,7 @@ export default class QuizCreatorDisplay extends Component {
             case 'fiveQuestions':
                 return(
                 <>
-                    <QuestionListDisplay questions={questionList} />
+                    <QuestionListDisplay updateDisplay={this.updateDisplay} questions={questionList} />
                     <div>You've reached the limit of five questions!</div>
                     <button onClick={this.doneSubmitting}>Done Submitting Questions</button>
 

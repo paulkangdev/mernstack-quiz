@@ -3,15 +3,15 @@ import axios from 'axios';
 
 export default class DeleteQuestionButton extends Component {
     removeQuestion = () => {
-        
-        axios.delete('', {
+        console.log("removequestion?");
+        axios.delete('http://localhost:3001/question/deleteQuestion', {
             data: {
                 id: this.props.deleteKey,
             },
          }
          )
          .then((res)=>{
-            this.props.updateQuizDB()
+            this.props.updateDisplay();
         }
         );
      

@@ -16,10 +16,10 @@ export default class QuestionListDisplay extends Component {
                         <div>
                         
                         <button>FakeEdit</button>
-                        <DeleteQuestionButton deleteKey={question._id}>
+                        <DeleteQuestionButton deleteKey={question._id} updateDisplay={this.props.updateDisplay}>
                             { ({removeQuestion}) => (
                                 <>
-                                <button>FakeDelete</button>
+                                <button onClick={removeQuestion}>FakeDelete</button>
                                 </>
                                 )
                             }
