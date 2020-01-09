@@ -3,14 +3,20 @@ import styled from 'styled-components';
 import Portal from './Portal';
 
 export default class Modal extends Component {
+
+  handleClose = () => {
+    this.props.toggle();
+    this.props.updateCurrentQuiz('');
+  }
+
   render() {
-    const { children, toggle, on } = this.props;
+    const { children, on } = this.props;
     return (
       <Portal>
           {on && (
             <>
                 <ModalWrapper>
-                  <button onClick={toggle}>Close</button>
+                  <button onClick={this.handleClose}>Close</button>
                   {children}
                 </ModalWrapper>
             </>
