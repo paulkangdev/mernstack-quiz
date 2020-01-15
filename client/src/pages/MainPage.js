@@ -83,9 +83,9 @@ updateDB = (idToUpdate, updateToApply) => {
                     :
                     <Modal on={on} toggle={toggle} updateCurrentQuiz={this.updateRootCurrentQuiz}>
                     <QuizCreator 
-                    currentQuiz={currentQuiz}
-                    updateCurrentQuiz={this.updateRootCurrentQuiz}
-                    updateQuizDB={this.getDataFromDb}/>
+                      currentQuiz={currentQuiz}
+                      updateCurrentQuiz={this.updateRootCurrentQuiz}
+                      updateQuizDB={this.getDataFromDb}/>
                     </Modal>
                 }
                 </>                      

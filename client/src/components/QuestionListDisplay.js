@@ -14,8 +14,6 @@ export default class QuestionListDisplay extends Component {
                             <span>{question.questionText}</span>
                         </div>
                         <div>
-                        
-                        <button>FakeEdit</button>
                         <DeleteQuestionButton deleteKey={question._id} updateDisplay={this.props.updateDisplay}>
                             { ({removeQuestion}) => (
                                 <>

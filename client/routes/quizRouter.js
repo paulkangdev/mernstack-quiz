@@ -10,6 +10,16 @@ router.get('/getQuiz', (req, res) => {
     });
   });
   
+  router.get('/getQuizById', (req, res) => {
+    console.log(req.query);
+    let id=req.query;
+    Quiz.findById(id, (err, quiz) => {
+      if (err) return res.json({ success: false, error: err });
+      console.log(res);
+      return res.json({ success: true, quiz: quiz });
+    });
+  });
+
   router.post('/updateQuiz', (req, res) => {
     const { id, update } = req.body;
     Quiz.findOneAndUpdate(id, update, (err) => {

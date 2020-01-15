@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import DeleteQuizButton from './DeleteQuizButton';
 import styled from 'styled-components';
+import {
+    Link,
+} from 'react-router-dom';
 
 export default class QuizListDisplay extends Component {
     render() {
@@ -13,8 +16,10 @@ export default class QuizListDisplay extends Component {
                             <span>{quiz.name}</span>
                         </div>
                         <div>
-                        <button>Play this Quiz!</button>
-                        <button>Edit</button>
+                        <Link to={`/play/${quiz._id}`}>
+                            <button>Play this Quiz!</button>
+                        </Link>
+                        
                         <DeleteQuizButton deleteKey={quiz._id} currentQuiz={currentQuiz} updateQuizDB={this.props.updateQuizDB}>
                             { ({removeQuiz}) => (
                                 <>
