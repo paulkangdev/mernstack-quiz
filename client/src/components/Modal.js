@@ -16,7 +16,7 @@ export default class Modal extends Component {
           {on && (
             <>
                 <ModalWrapper>
-                  <button onClick={this.handleClose}>Close</button>
+                  <button onClick={this.handleClose}>Submit Quiz and Close</button>
                   {children}
                 </ModalWrapper>
             </>
