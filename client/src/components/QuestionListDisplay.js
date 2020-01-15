@@ -17,7 +17,7 @@ export default class QuestionListDisplay extends Component {
                         <DeleteQuestionButton deleteKey={question._id} updateDisplay={this.props.updateDisplay}>
                             { ({removeQuestion}) => (
                                 <>
-                                <button onClick={removeQuestion}>FakeDelete</button>
+                                <button onClick={removeQuestion}>Delete Question</button>
                                 </>
                                 )
                             }
@@ -38,17 +38,18 @@ export default class QuestionListDisplay extends Component {
 const QuestionInList = styled.li`
     border: 1px solid black;
     border-radius: 5px;
+    color: white;
     display: flex;
-    height: 1rem;
     justify-content: space-between;
     list-style:none;
     margin: 5px;
-    padding: 10px;
+    padding: 5px;
     text-decoration: none;
+    width: 40vw;
     > div{
-    
         > span{
-            color: blue;
+            color: white;
+        }
     }
-}
+
 `;

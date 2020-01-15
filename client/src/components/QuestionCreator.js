@@ -85,22 +85,21 @@ class QuestionCreator extends React.Component {
     render() {
      return(
          <>
-        <input 
+        <div className="questionText"><input 
             type="text" 
             onChange={this.handleInputChange} 
             name="questionText" 
             placeholder="Enter your QUESTION here!" 
-            style={{ width: '200px' }}
         />
-        
+        </div>
         <div className="answer">
             <input name="answerOne"
                 type="text" 
                 onChange={this.handleInputChange} 
                 placeholder="Enter your ANSWER here!" 
-                style={{ width: '200px' }}
+                
             />
-                CORRECT answer <input type="radio" name="correctAnswer" value="answerOne" onChange={this.handleInputChange}></input> 
+                Correct answer <input type="radio" name="correctAnswer" value="answerOne" onChange={this.handleInputChange}></input> 
            
         </div>
         <div className="answer">
@@ -108,9 +107,8 @@ class QuestionCreator extends React.Component {
                 type="text" 
                 onChange={this.handleInputChange} 
                 placeholder="Enter your ANSWER here!" 
-                style={{ width: '200px' }}
             />
-                CORRECT answer <input type="radio" name="correctAnswer" value="answerTwo" onChange={this.handleInputChange}></input> 
+                Correct answer <input type="radio" name="correctAnswer" value="answerTwo" onChange={this.handleInputChange}></input> 
            
         </div>
         <div className="answer">
@@ -118,9 +116,8 @@ class QuestionCreator extends React.Component {
                 type="text" 
                 onChange={this.handleInputChange} 
                 placeholder="Enter your ANSWER here!" 
-                style={{ width: '200px' }}
             />
-                CORRECT answer <input type="radio" name="correctAnswer" value="answerThree" onChange={this.handleInputChange}></input> 
+                Correct answer <input type="radio" name="correctAnswer" value="answerThree" onChange={this.handleInputChange}></input> 
           
         </div>
         <div className="answer">
@@ -128,9 +125,8 @@ class QuestionCreator extends React.Component {
                 type="text" 
                 onChange={this.handleInputChange} 
                 placeholder="Enter your ANSWER here!" 
-                style={{ width: '200px' }}
             />
-              CORRECT answer <input type="radio" name="correctAnswer" value="answerFour" onChange={this.handleInputChange}></input> 
+              Correct answer <input type="radio" name="correctAnswer" value="answerFour" onChange={this.handleInputChange}></input> 
         </div>
             <button type="submit" onClick={this.handleSubmit}>Submit Question</button>
     </>

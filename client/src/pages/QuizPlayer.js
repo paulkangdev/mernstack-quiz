@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-
 import axios from 'axios';
 import QuizPlayDisplay from '../components/QuizPlayDisplay';
 
@@ -65,8 +64,8 @@ class QuizPlayer extends Component {
                     currentQuiz={this.state.name}
                     questionsList={questionsList} 
                     updateList={this.updateList}
-                >
-                </QuizPlayDisplay>
+                />
+                
             </>    
         );
     }   

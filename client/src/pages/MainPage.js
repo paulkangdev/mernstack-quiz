@@ -65,12 +65,19 @@ updateDB = (idToUpdate, updateToApply) => {
   render() {
     const {quizzes, currentQuiz} = this.state;
     return (
-        <>        
+        <MainPageSection>
             <h1>Welcome to the Quiz Factory!</h1>
             <QuizList>
             {quizzes.length === 0
-                ? <div><span>No quizzes exist right now. Why don't you make one? :)</span></div>
-                : <QuizListDisplay quizzes={quizzes} currentQuiz={currentQuiz} updateQuizDB={this.getDataFromDb}/>
+                ? <h2>
+                    <p>No quizzes exist right now :(</p> 
+                    <p>Why don't you make one? :)</p>
+                  </h2>
+                : <QuizListDisplay 
+                    quizzes={quizzes} 
+                    currentQuiz={currentQuiz} 
+                    updateQuizDB={this.getDataFromDb}
+                  />
             }
             </QuizList>
             <Toggle>
@@ -91,7 +98,7 @@ updateDB = (idToUpdate, updateToApply) => {
                 </>                      
             )}  
             </Toggle>
-        </>    
+        </MainPageSection>    
     );
   }
 }
@@ -103,12 +110,15 @@ const QuizList = styled.div`
   flex-direction: column;
   margin:0 auto;
   padding: 0;
-  >span {
-    font-weight: bold;
-    font-size: 1.5rem;
-    margin: 1rem;
-    padding: 1rem;
-  }
+`;
+
+const MainPageSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
   >button {
     border: 1px solid black;
     border-radius: 5px;
@@ -124,5 +134,4 @@ const QuizList = styled.div`
   >button:active {
     background: black;
   }
-`;
-
+`

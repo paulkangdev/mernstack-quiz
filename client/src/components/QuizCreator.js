@@ -1,17 +1,7 @@
-import React, {Component} from 'react';
-import QuestionCreator from './QuestionCreator';
+import React from 'react';
 import QuizCreatorDisplay from './QuizCreatorDisplay';
 import axios from 'axios';
-import Toggle from './Toggle';
-import { runInThisContext } from 'vm';
-import Modal from './Modal';
-import Portal from './Portal';
-
-
-var Question = require('../models/questionModel');
-var Quiz = require('../models/quizModel');
-
-
+import styled from 'styled-components';
 class QuizCreator extends React.Component {
 
     constructor(props) {
@@ -74,14 +64,14 @@ class QuizCreator extends React.Component {
         var submitted = this.props.currentQuiz;
         
         return ( 
-            <>
+            <QuizWrapper>
             <h1>Quiz Creator: {this.state.quizName}</h1>
             {!submitted ? ( <>
             <input name="quizName"
                 type="text" 
                 onChange={this.handleInputChange}
                 placeholder="Please Name Your Quiz"
-                style={{ width: '200px' }} >
+                style={{ width: '40vh' }} >
             </input>
             <button onClick={this.handleSubmit}>
                     Submit Quiz
@@ -90,10 +80,17 @@ class QuizCreator extends React.Component {
             ) : 
                 <QuizCreatorDisplay currentQuiz={submitted}/>
             }
-            </>
+            </QuizWrapper>
             
         );
     }
 }
 
 export default QuizCreator;
+
+const QuizWrapper = styled.div`
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`

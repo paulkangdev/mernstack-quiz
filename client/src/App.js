@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import MainPage from './pages/MainPage';
 import FrontPage from './pages/FrontPage';
 import QuizPlayer from './pages/QuizPlayer';
@@ -15,7 +15,6 @@ const App = () => (
           <Route exact path="/" component={FrontPage} />
           <Route exact path="/main" component={MainPage} />
           <Route path="/play/:id" component={QuizPlayer} />
-          
         </Switch>
         </div>
       </Router>    

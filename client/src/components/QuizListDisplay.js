@@ -19,7 +19,6 @@ export default class QuizListDisplay extends Component {
                         <Link to={`/play/${quiz._id}`}>
                             <button>Play this Quiz!</button>
                         </Link>
-                        
                         <DeleteQuizButton deleteKey={quiz._id} currentQuiz={currentQuiz} updateQuizDB={this.props.updateQuizDB}>
                             { ({removeQuiz}) => (
                                 <>
@@ -42,16 +41,40 @@ const QuizInList = styled.li`
     border: 1px solid black;
     border-radius: 5px;
     display: flex;
-    height: 1rem;
+    flex-direction: row;
     justify-content: space-between;
     list-style:none;
-    margin: 5px;
+    margin: 0 auto;
     padding: 10px;
     text-decoration: none;
+    width: 50vw;
+        min-width: 295px;
     > div{
-    
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin:0;
+        padding:0;
         > span{
-            color: blue;
+            font-family: Arial, Helvetica, sans-serif;
+            justify-content: center;
+            text-align: center;
+            width: 100%;
        }
     }
+    button {
+        background: white;
+        border: 1px solid black;
+        border-radius: 5px;
+        height: 60px;
+        width: 80px; 
+    }
+    button:hover {
+        background: whitesmoke;
+        cursor: pointer;
+    }
+    button:active {
+        background: black;
+  }
 `;

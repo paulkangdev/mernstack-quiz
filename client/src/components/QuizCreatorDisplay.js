@@ -107,7 +107,24 @@ export default class QuizCreatorDisplay extends Component {
 
 
 const PadDiv = styled.div`
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    input[type=text]{
+        border: 5px dashed white;
+        padding: 5px;
+        margin-bottom: 5px;
+        width: 30vw;
+    }
     font-family: arial;
     font-weight: bold;
     padding: 1rem;
+    >div{
+        
+        display:flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        font-size: 1rem;
+    }
 `;
