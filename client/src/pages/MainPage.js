@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import QuizCreator from './QuizCreator';
-import Toggle from './Toggle';
-import Modal from './Modal';
+import QuizCreator from '../components/QuizCreator';
+import Toggle from '../components/Toggle';
+import Modal from '../components/Modal';
 import styled from 'styled-components';
-import QuizListDisplay from './QuizListDisplay';
+import QuizListDisplay from '../components/QuizListDisplay';
 
 class MainPage extends Component {
   state = {
