@@ -5,28 +5,23 @@ import {
     Switch
 } from 'react-router-dom';
 import axios from 'axios';
+import QuizPlayDisplay from '../components/QuizPlayDisplay';
 
 class QuizPlayer extends Component { 
     constructor(props) {
         super(props);
         this.state = {
-        currentQuiz: 0,
-        quizzes: [],
-        id: 0,
-        message: null,
-        intervalIsSet: false,
-        idToDelete: null,
-        idToUpdate: null,
-        objectToUpdate: null,
-        quizCreatorDisplay: false,
-      };
+            currentQuiz: this.props.match.params.id,
+        };
       this.getQuizFromDb = this.getQuizFromDb.bind(this);
       this.componentDidMount = this.componentDidMount.bind(this);
+      this.getQuestionsFromDb = this.getQuestionsFromDb.bind(this);
+      this.updateList = this.updateList.bind(this);
     }
-    
 
     componentDidMount() {
         this.getQuizFromDb();
+        this.getQuestionsFromDb();
     }
 
     getQuizFromDb = () => {
@@ -38,16 +33,44 @@ class QuizPlayer extends Component {
                     id: quizId,
                 }
             })
-        .then((quiz) => quiz.json())
-        .then((res) => this.setState({ quizzes: res.quiz }));
-        
+        .then((res) => {
+            this.setState({
+                name: res.data.quiz.name,
+            });
+        });
     };
 
+    getQuestionsFromDb = () => {
+        axios.get('http://localhost:3001/question/getQuestions',
+        {
+            params: {
+                containingQuiz: this.props.match.params.id,
+            }
+        })
+        .then((res) => {
+            this.setState({
+                questionsList: res.data.questions,
+            });
+        });
+    }
+    updateList(questionsList) {
+        questionsList=this.state.questionsList;
+        questionsList.shift();
+        this.setState({
+            questionsList: questionsList
+        })
+    }
+
   render() {
-      console.log(this.props.match);
+      var questionsList = this.state.questionsList;
         return(
             <>        
-                <h1>{this.props.match.id}Potatoes</h1>
+                <QuizPlayDisplay 
+                    currentQuiz={this.state.name}
+                    questionsList={questionsList} 
+                    updateList={this.updateList}
+                >
+                </QuizPlayDisplay>
             </>    
         );
     }   

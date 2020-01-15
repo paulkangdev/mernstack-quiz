@@ -12,7 +12,7 @@ router.get('/getQuiz', (req, res) => {
   
   router.get('/getQuizById', (req, res) => {
     console.log(req.query);
-    let id=req.query;
+    let id=req.query.id;
     Quiz.findById(id, (err, quiz) => {
       if (err) return res.json({ success: false, error: err });
       console.log(res);
