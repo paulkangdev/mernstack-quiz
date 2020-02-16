@@ -18,7 +18,6 @@ export default class QuizPlayDisplay extends Component {
 
     submitAnswer(event){
         event.preventDefault();
-       // quick and dirty way of checking correct answerr
             let answer=event.target.classList[0];
             if (answer===this.props.questionsList[0].correctAnswer){
                 this.correctAnswerSubmitted();
@@ -30,7 +29,6 @@ export default class QuizPlayDisplay extends Component {
         this.setState(
             {score: this.state.score+10}
         )
-        
     }
     
     render() {
@@ -58,7 +56,7 @@ export default class QuizPlayDisplay extends Component {
                 : <>
                 You have completed the quiz!
                 <p>
-                    <Link to="/main">Return to Main Page</Link>
+                    <Link to="/">Return to Main Page</Link>
                 </p>
                 </> }
             </div>

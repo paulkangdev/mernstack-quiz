@@ -1,6 +1,5 @@
 import React from 'react';
 import MainPage from './pages/MainPage';
-import FrontPage from './pages/FrontPage';
 import QuizPlayer from './pages/QuizPlayer';
 import {
   BrowserRouter as Router,

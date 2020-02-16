@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+const { body } = require('express-validator');
+
 const Quiz = require('../src/models/quizModel');
 const Question = require('../src/models/questionModel')
 
@@ -43,15 +45,16 @@ router.get('/getQuiz', (req, res) => {
    
   });
   
-  router.post('/newQuiz', (req, res) => {
+  router.post('/newQuiz', [
+    body('quizName').trim().escape(),
+  ], (req, res) => {
     var quiz = new Quiz();
+    const { quizName } = req.body;
     
-    const { quizName, id } = req.body;
-   
     quiz.name = quizName;
-    quiz.id = id;
     
-    quiz.save((err,quiz) => {
+    
+    quiz.save((err, quiz) => {
       if (err) return res.json({ success: false, error: err });
      else {
        return res.json({success: true, quiz: quiz});

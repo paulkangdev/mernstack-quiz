@@ -49,6 +49,7 @@ class QuizCreator extends React.Component {
         
         axios.post('http://localhost:3001/quiz/newQuiz', data)
         .then((response) =>{
+            console.log(response);
             let currentQuiz = response.data.quiz._id;
             this.props.updateQuizDB();
             this.props.updateCurrentQuiz(currentQuiz);

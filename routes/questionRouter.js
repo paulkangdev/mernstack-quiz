@@ -1,8 +1,18 @@
 var express = require('express');
 var router = express.Router();
+const { body } = require('express-validator');
 const Question = require('../src/models/questionModel')
 
-router.post('/newQuestion', (req, res) => {
+router.post('/newQuestion', 
+  [
+    body('questionText').trim().escape(),
+    body('answerOne').trim().escape(),
+    body('answerTwo').trim().escape(),
+    body('answerThree').trim().escape(),
+    body('answerFour').trim().escape(),
+    body('containingQuiz').trim().escape(),
+  ],
+  (req, res) => {
     let question = new Question();
 
     const { 
